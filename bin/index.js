@@ -40,7 +40,9 @@ Router.get('/docs/*', auth({ // basic-auth
 
 
 //routing
-Router.add('/post', require('../routes/index'));
+Router.add('/post', require('../routes/post'));
 
 app.use(Router.R({cors: {}}));
-app.listen(3000);
+app.listen(3000, () => {
+  console.log('Server start');
+});
