@@ -16,7 +16,7 @@ const _posts = require('../db/posts');
  * @apiSuccess {Date} posts.date  date post
  *
  * @apiSuccessExample Success-Response:
-HTTP/1.1 200 OK
+ HTTP/1.1 200 OK
  {
     "posts":[
        {
@@ -59,7 +59,7 @@ Router.get('/', async ctx => {
  * @apiSuccess {Date} posts.date  date post
  *
  * @apiSuccessExample Success-Response:
-HTTP/1.1 200 OK
+ HTTP/1.1 200 OK
  {
     "post":{
        "_id":"5823739d6602c6128816ff8f",
@@ -106,11 +106,10 @@ Router.get('/:id', async ctx => {
  */
 
 Router.post('/', async ctx => {
-  ctx.body = ctx.request.body;
+  let body = ctx.request.body;
+  if (!body.title || !body.text) return ctx.status = 400;
 
-  if (!ctx.body.title || !ctx.body.text) return ctx.status = 400;
-
-  let post = await _posts.createPost(ctx.body.title, ctx.body.text);
+  let post = await _posts.createPost(body.title, body.text);
   if (post) {
     ctx.status = 201;
     ctx.body = {create: true, id: post._id};
@@ -144,11 +143,11 @@ Router.post('/', async ctx => {
  */
 
 Router.put('/:id', async ctx => {
-  ctx.body = ctx.request.body;
+  let body = ctx.request.body;
 
-  if (!ctx.body.title && !ctx.body.text) return ctx.status = 400;
+  if (!body.title && !body.text) return ctx.status = 400;
 
-  if (await _posts.updatePost(ctx.params.id, ctx.body.title, ctx.body.text)) {
+  if (await _posts.updatePost(ctx.params.id, body.title, body.text)) {
     ctx.body = {update: true, id: ctx.params.id};
   } else {
     ctx.body = {update: false, id: ctx.params.id};

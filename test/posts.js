@@ -41,7 +41,6 @@ describe('Pages test', function () {
     server
       .post('/')
       .send({title: 'test title'})
-      .expect('Content-type', /json/)
       .expect(400)
       .end(done);
   });

@@ -18,7 +18,7 @@ $ npm test
 or 
 
 ~~~sh
-$ mocha --harmony start_server
+$ mocha --harmony --opts start_server
 ~~~
 
 ### Generate docs
